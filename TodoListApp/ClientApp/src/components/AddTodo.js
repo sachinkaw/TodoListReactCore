@@ -6,43 +6,72 @@ class AddTodo extends Component {
         super();
         this.state = {
             todo: '',
-            todoError: false
+            inputError: false
         };
-    }
-
-    // On entering the data, need to set the status
-    updateInput = (e) => {
-        this.setState({ todo: e.target.value });
     }
 
     // On Submit function
     submitTodo = e => {
 
+        const { todo } = this.state;
+        const { addTodoFn } = this.props;
+
         e.preventDefault();
         document.getElementById('addTodoInput').value = '';
 
-        this.props.addTodoFn(this.state.todo);
+        if (todo !== undefined && todo !== null) {
+            addTodoFn(todo);
+            this.setState({
+                todo: null
+            });
+        } else {
+            this.setState({
+                todo: null,
+                inputError: true
+            });
+        }
     }
 
     render() {
+        const { todo } = this.state;
 
         return (
             <div className='addTodoContainer'>
                 <form onSubmit={(e) => this.submitTodo(e)}>
-                    <div class="form-group">
-                        <label for='addTodoInput' class='font-weight-bold'>Enter Todo Item</label>
-                        <input type='text' id='addTodoInput' class='form-control form-control-lg' onChange={(e) => this.updateInput(e)} placeholder='Todo Item' aria-describedby='todosuggestion'></input>
+                    <div className="form-group">
+                        <label htmlFor='addTodoInput' className='font-weight-bold'>Enter Todo Item</label>
+                        <input
+                            type='text'
+                            id='addTodoInput'
+                            className='form-control form-control-lg'
+                            
+                            placeholder='Todo Item'
+                            aria-describedby='todosuggestion'
+                            defaultValue={todo}
+                            onChange={e => {
+                                this.setState({
+                                todo: e.target.value,
+                                inputError: false
+                                });
+                            }}
+                        />
+                        {this.state.inputError ?
+                        (
                         <div>
-                            {this.state.todoError}
+                            <span className="text-danger">
+                                Kindly enter a valid string
+                            </span>
                         </div>
-                        <small id='addTodoInput' class='form-text text-muted'>Let's have fun!</small>
+                        ) : (
+                          ''
+                        )}
+                        <small id='addTodoInput' className='form-text text-muted'>Let's have fun!</small>
                     </div>
                     <button type='submit'>Submit</button>
                 </form>
             </div>
         )
     }
-
 }
 
 export default AddTodo;
