@@ -36,6 +36,7 @@ class AddTodo extends Component {
         const { todo } = this.state;
 
         return (
+         
             <div className='addTodoContainer'>
                 <form onSubmit={(e) => this.submitTodo(e)}>
                     <div className="form-group">
