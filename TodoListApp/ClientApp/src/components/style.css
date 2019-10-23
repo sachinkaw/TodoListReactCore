@@ -12,3 +12,8 @@ table {
     width: 100%;
     margin-top: 50px;
 }
+
+#noItemFound {
+    text-align: center;
+    margin-top: 50px;
+}

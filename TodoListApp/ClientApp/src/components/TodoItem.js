@@ -9,7 +9,9 @@ class TodoItem extends Component {
         const { todos, updateTodoItemFn } = this.props;
         console.log(todos);
 
-        return todos.map((_todo, _index) => {
+        return todos.length !== 0
+        ?
+        todos.map((_todo, _index) => {
             return (
                 <tr key={_todo.id}
                     className={_todo.status === "Close" ? "todoItem completed" : "todoItem"}
@@ -23,6 +25,8 @@ class TodoItem extends Component {
                 </tr>
             )
         })
+        :
+        <div id='noItemFound'>No Todo Items found</div>
     }
 
     render() {
